@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shavkatjon Yuldashev - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            cursor: none;
+            position: relative;
+        }
+
+        /* Animated Background Effects */
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .lightning-row {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, #0099cc, transparent);
+            opacity: 0;
+            animation: lightning-sweep 4s infinite;
+        }
+
+        .lightning-row:nth-child(1) { top: 20%; animation-delay: 0s; }
+        .lightning-row:nth-child(2) { top: 40%; animation-delay: 1s; }
+        .lightning-row:nth-child(3) { top: 60%; animation-delay: 2s; }
+        .lightning-row:nth-child(4) { top: 80%; animation-delay: 3s; }
+
+        @keyframes lightning-sweep {
+            0% { opacity: 0; transform: translateX(-100%); }
+            10% { opacity: 1; transform: translateX(-50%); }
+            20% { opacity: 1; transform: translateX(0%); }
+            30% { opacity: 0; transform: translateX(50%); }
+            100% { opacity: 0; transform: translateX(100%); }
+        }
+
+        .storm-particles {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: radial-gradient(circle, #00d4ff, transparent);
+            border-radius: 50%;
+            animation: storm-float 8s infinite linear;
+        }
+
+        .storm-particles:nth-child(5) { left: 10%; animation-delay: 0s; animation-duration: 6s; }
+        .storm-particles:nth-child(6) { left: 30%; animation-delay: 2s; animation-duration: 8s; }
+        .storm-particles:nth-child(7) { left: 50%; animation-delay: 4s; animation-duration: 7s; }
+        .storm-particles:nth-child(8) { left: 70%; animation-delay: 1s; animation-duration: 9s; }
+        .storm-particles:nth-child(9) { left: 90%; animation-delay: 3s; animation-duration: 6s; }
+
+        @keyframes storm-float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Thor's Hammer Cursor */
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.6));
+        }
+
+        .hammer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-origin: bottom center;
+        }
+
+        .hammer-head {
+            width: 28px;
+            height: 18px;
+            background: linear-gradient(145deg, #c0c0c0, #808080);
+            border-radius: 4px;
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            box-shadow: 
+                inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+                0 0 15px rgba(0, 212, 255, 0.4);
+        }
+
+        .hammer-head::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 3px;
+            background: linear-gradient(90deg, #00d4ff, #0099cc);
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
+        }
+
+        .hammer-handle {
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, #8B4513, #A0522D, #654321);
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+            border-radius: 2px;
+            box-shadow: 
+                inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .hammer-grip {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(45deg, #4A4A4A, #6A6A6A);
+            position: absolute;
+            bottom: 2px;
+            left: 16px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.6;
+        }
+
+        .mini-hammer {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-origin: bottom center;
+            transform: scale(0.5);
+        }
+
+        .mini-hammer .hammer-head {
+            width: 28px;
+            height: 18px;
+            background: linear-gradient(145deg, #c0c0c0, #808080);
+            border-radius: 4px;
+            position: absolute;
+            top: 2px;
+            left: 6px;
+            box-shadow: 
+                inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+                inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+                0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .mini-hammer .hammer-handle {
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(180deg, #8B4513, #A0522D, #654321);
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+            border-radius: 2px;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            color: white;
+            position: relative;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffffff, #00d4ff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            animation: thunder-glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes thunder-glow {
+            0% { filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3)); }
+            100% { filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8)); }
+        }
+
+        .header .department {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .header .student-id {
+            font-size: 1.2rem;
+            color: #87ceeb;
+            font-weight: 500;
+        }
+
+        /* Cards Container */
+        .cards-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+        }
+
+        /* Jigsaw Cards */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+        }
+
+        /* Jigsaw Puzzle Shape Variations */
+        .card:nth-child(1) { transform: rotate(-3deg) translateY(-10px); clip-path: polygon(0% 0%, 90% 0%, 100% 15%, 100% 85%, 90% 100%, 0% 100%); }
+        .card:nth-child(2) { transform: rotate(2deg) translateY(15px); clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 15%); }
+        .card:nth-child(3) { transform: rotate(-1deg) translateY(-5px); clip-path: polygon(0% 0%, 85% 0%, 100% 20%, 100% 100%, 15% 100%, 0% 80%); }
+        .card:nth-child(4) { transform: rotate(3deg) translateY(20px); clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%); }
+        .card:nth-child(5) { transform: rotate(-2deg) translateY(-15px); clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 10% 100%, 0% 85%); }
+        .card:nth-child(6) { transform: rotate(1deg) translateY(10px); clip-path: polygon(10% 0%, 100% 0%, 100% 90%, 90% 100%, 0% 100%, 0% 10%); }
+        .card:nth-child(7) { transform: rotate(-4deg) translateY(-20px); clip-path: polygon(0% 0%, 90% 0%, 100% 10%, 100% 100%, 0% 100%); }
+        .card:nth-child(8) { transform: rotate(2deg) translateY(5px); clip-path: polygon(0% 0%, 100% 0%, 100% 85%, 85% 100%, 0% 100%, 0% 15%); }
+        .card:nth-child(9) { transform: rotate(-1deg) translateY(25px); clip-path: polygon(15% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 25%); }
+        .card:nth-child(10) { transform: rotate(3deg) translateY(-10px); clip-path: polygon(0% 0%, 85% 0%, 100% 25%, 100% 100%, 15% 100%, 0% 75%); }
+        .card:nth-child(11) { transform: rotate(-2deg) translateY(15px); clip-path: polygon(25% 0%, 100% 0%, 100% 75%, 75% 100%, 0% 100%, 0% 25%); }
+        .card:nth-child(12) { transform: rotate(1deg) translateY(-25px); clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 5% 100%, 0% 90%); }
+        .card:nth-child(13) { transform: rotate(-3deg) translateY(20px); clip-path: polygon(20% 0%, 100% 0%, 100% 80%, 80% 100%, 0% 100%, 0% 20%); }
+        .card:nth-child(14) { transform: rotate(2deg) translateY(-5px); clip-path: polygon(0% 0%, 80% 0%, 100% 30%, 100% 100%, 20% 100%, 0% 70%); }
+        .card:nth-child(15) { transform: rotate(-1deg) translateY(10px); clip-path: polygon(30% 0%, 100% 0%, 100% 70%, 70% 100%, 0% 100%, 0% 30%); }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1));
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.05) rotateY(5deg);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc, #667eea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card .link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00d4ff, #0099cc, #667eea);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card .link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card .link:hover::before {
+            left: 100%;
+        }
+
+        .card .link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.6);
+        }
+
+        /* About Me Section */
+        .about-section {
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .about-btn {
+            background: linear-gradient(135deg, #00d4ff, #0099cc, #667eea);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .about-btn:hover::before {
+            left: 100%;
+        }
+
+        .about-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
+        }
+
+        .contact-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .contact-details.show {
+            max-height: 300px;
+            padding: 30px;
+        }
+
+        .contact-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 204, 0.1));
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .contact-item strong {
+            color: #1e293b;
+            font-weight: 700;
+        }
+
+        .contact-item span {
+            color: #475569;
+            margin-left: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .card {
+                padding: 20px;
+                transform: none !important;
+                clip-path: none !important;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header .department {
+                font-size: 1.2rem;
+            }
+
+            .header .student-id {
+                font-size: 1rem;
+            }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        .card:nth-child(odd) {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .card:nth-child(even) {
+            animation: float 6s ease-in-out infinite reverse;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="background-effects">
+        <div class="lightning-row"></div>
+        <div class="lightning-row"></div>
+        <div class="lightning-row"></div>
+        <div class="lightning-row"></div>
+        <div class="storm-particles"></div>
+        <div class="storm-particles"></div>
+        <div class="storm-particles"></div>
+        <div class="storm-particles"></div>
+        <div class="storm-particles"></div>
+    </div>
+
+    <!-- Thor's Hammer Cursor -->
+    <div class="cursor">
+        <div class="hammer">
+            <div class="hammer-head"></div>
+            <div class="hammer-handle"></div>
+            <div class="hammer-grip"></div>
+        </div>
+    </div>
+    
+    <div class="header">
+        <h1>Shavkatjon Yuldashev</h1>
+        <div class="department">Dong-A University IBM</div>
+        <div class="student-id">Student ID: 2217701</div>
+    </div>
+
+    <div class="cards-container">
+        <div class="card">
+            <h3>1 - Upcoming Main Webpage </h3>
+            <a href="https://shavkatjony.github.io/Corex/"link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>2.- Cj Logistics Process</h3>
+            <a href="https://docs.google.com/document/d/1bF6XKssM6cICVNJT9IScEluRljcELZcfZ8v27eMHlz0/edit?usp=sharing class=" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>2.2 CJ LOGISTICS Explainer web - </h3>
+            <a href="https://shavkatjony.github.io/logistics/" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>3- Flowchart Web App</h3>
+            <a href="https://shavkatjony.github.io/chartify/" class="link">View Project </a>
+        </div>
+        <div class="card">
+            <h3>4.0- first-Leadtime Analytics Web app </h3>
+            <a href="https://shavkatjony.github.io/Analyzing-leadtime/" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>4.1 - New -QuantumLeap Analyser</h3>
+            <a href="https://shavkatjony.github.io/QuantumLeap-Analytics/#" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>4.2 - Analyzing Lead Time and the Bullwhip Effect</h3>
+            <a href="https://docs.google.com/spreadsheets/d/1JQlcvIRc9XzM48iW6xvBx4e7Icp6Ay0nYOo2pQQXhXU/edit?usp=sharing" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>6 - Design Thinking</h3>
+            <a href="https://docs.google.com/document/d/1yvExqxNjK-zsmnGrjPYDmKF28ew8Qrs6aI1FYVFggTM/edit?usp=sharing" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>7 - TSP Game</h3>
+            <a href="https://shavkatjony.github.io/silktsp/" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>11- Problem Research</h3>
+            <a href="https://docs.google.com/document/d/1_tPfQYCylSTXkcTehyh8UG4yoAjmXHxri5X7Q1Zquuo/edit?usp=sharing" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>12- Slotting Strategy</h3>
+            <a href="https://docs.google.com/spreadsheets/d/1MkVpZzGErpAe9DX4fvcbyWpgx-lsefy-Xh5XMle5SAI/edit?usp=sharin" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>12.2 slotting strategy Prompt</h3>
+            <a href="https://docs.google.com/document/d/1bnkzVkmgZiEGr-2nJV2BbJbV7Gz5mQZ7vllyTFsAoxE/edit?usp=sharing"link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>12.3 - Tool of Slotting </h3>
+            <a href="https://shavkatjony.github.io/slottingtool/" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>13- Counterfeit Supplements</h3>
+            <a href="https://docs.google.com/spreadsheets/d/1rh0KE0oHjMSjUXNi_CjMzbmyKs1rIAJc7u_-cjEo-qs/edit?usp=sharing" class=" class="link">View Project</a>
+        </div>
+        <div class="card">
+            <h3>16 - HIKING </h3>
+            <a href="https://docs.google.com/document/d/18asZ3uOgDYkkUfWz10E5J2fmt9YQPiPZSp3OD6e98zo/edit?usp=sharing" class="link">View Project</a>
+        </div>
+    </div>
+
+    <div class="about-section">
+        <button class="about-btn" onclick="toggleContact()">About Me</button>
+        <div class="contact-details" id="contactDetails">
+            <div class="contact-item">
+                <strong>📱 Phone:</strong>
+                <span>010 2463 1041</span>
+            </div>
+            <div class="contact-item">
+                <strong>📷 Instagram:</strong>
+                <span>@shavkatjon_l</span>
+            </div>
+            <div class="contact-item">
+                <strong>📧 Email:</strong>
+                <span>shavkatjon.yuldashev.0411@gmail.com</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Thor's Hammer cursor following effect
+        const cursor = document.querySelector('.cursor');
+        const hammer = document.querySelector('.hammer');
+        const trails = [];
+        
+        // Create hammer trails
+        for (let i = 0; i < 5; i++) {
+            const trail = document.createElement('div');
+            trail.className = 'cursor-trail';
+            trail.innerHTML = `
+                <div class="mini-hammer">
+                    <div class="hammer-head"></div>
+                    <div class="hammer-handle"></div>
+                </div>
+            `;
+            document.body.appendChild(trail);
+            trails.push({
+                element: trail,
+                x: 0,
+                y: 0,
+                rotation: 0
+            });
+        }
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        let velocity = 0;
+        let lastMouseX = 0, lastMouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Calculate velocity for hammer swing effect
+            const deltaX = mouseX - lastMouseX;
+            const deltaY = mouseY - lastMouseY;
+            velocity = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+        });
+
+        function animateCursor() {
+            // Smooth cursor movement
+            cursorX += (mouseX - cursorX) * 0.15;
+            cursorY += (mouseY - cursorY) * 0.15;
+            
+            // Hammer swing rotation based on velocity
+            const swingAngle = Math.min(velocity * 2, 30);
+            const rotationDirection = (mouseX - cursorX) > 0 ? 1 : -1;
+            
+            cursor.style.left = (cursorX - 20) + 'px';
+            cursor.style.top = (cursorY - 20) + 'px';
+            
+            // Apply swing effect
+            hammer.style.transform = `rotate(${swingAngle * rotationDirection}deg)`;
+            
+            // Gradually reduce swing
+            velocity *= 0.9;
+
+            // Animate trails with different delays and scales
+            trails.forEach((trail, index) => {
+                const delay = (index + 1) * 0.08;
+                const targetX = cursorX - (mouseX - cursorX) * delay;
+                const targetY = cursorY - (mouseY - cursorY) * delay;
+                
+                trail.x += (targetX - trail.x) * 0.1;
+                trail.y += (targetY - trail.y) * 0.1;
+                trail.rotation += (swingAngle * rotationDirection * 0.5 - trail.rotation) * 0.1;
+                
+                trail.element.style.left = (trail.x - 10) + 'px';
+                trail.element.style.top = (trail.y - 10) + 'px';
+                trail.element.style.opacity = 1 - (index * 0.15);
+                trail.element.style.transform = `scale(${1 - index * 0.1}) rotate(${trail.rotation}deg)`;
+            });
+
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // Lightning effect on click
+        document.addEventListener('click', () => {
+            const lightning = document.createElement('div');
+            lightning.style.cssText = `
+                position: fixed;
+                left: ${cursorX - 50}px;
+                top: ${cursorY - 50}px;
+                width: 100px;
+                height: 100px;
+                background: radial-gradient(circle, rgba(0, 212, 255, 0.8), transparent);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9997;
+                animation: lightning-burst 0.5s ease-out forwards;
+            `;
+            
+            document.body.appendChild(lightning);
+            
+            setTimeout(() => {
+                lightning.remove();
+            }, 500);
+        });
+
+        // Add lightning burst animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes lightning-burst {
+                0% { transform: scale(0); opacity: 1; }
+                100% { transform: scale(3); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Contact details toggle
+        function toggleContact() {
+            const details = document.getElementById('contactDetails');
+            details.classList.toggle('show');
+        }
+
+        // Card hover effects with thunder
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+                this.style.filter = 'drop-shadow(0 0 20px rgba(0, 212, 255, 0.4))';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+                this.style.filter = 'none';
+            });
+        });
+
+        // Smooth scroll and page load animations
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform += ' translateY(50px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    card.style.opacity = '1';
+                    card.style.transform = card.style.transform.replace('translateY(50px)', '');
+                }, index * 100);
+            });
+        });
+
+        // Add thunder sound effect simulation (visual feedback)
+        document.addEventListener('click', () => {
+            document.body.style.animation = 'thunder-flash 0.1s ease-out';
+            setTimeout(() => {
+                document.body.style.animation = '';
+            }, 100);
+        });
+
+        // Thunder flash effect
+        const thunderStyle = document.createElement('style');
+        thunderStyle.textContent = `
+            @keyframes thunder-flash {
+                0% { filter: brightness(1); }
+                50% { filter: brightness(1.3) contrast(1.2); }
+                100% { filter: brightness(1); }
+            }
+        `;
+        document.head.appendChild(thunderStyle);
+    </script>
+</body>
+</html>
